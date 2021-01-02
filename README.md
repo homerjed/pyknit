@@ -7,7 +7,7 @@ Transfer an image into the knitting domain as shown here:
 Usage:
 
 ```
-python pyknit.py n <#colors> d <downsample_factor> path <image_file>
+python pyknit.py n <#colors> d <downsample> path save_path
 ```
 
 This is done by breaking the image into separate bins of pixel density as shown below:
