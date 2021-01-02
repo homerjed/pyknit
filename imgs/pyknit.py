@@ -1,3 +1,12 @@
+"""
+  TODO:
+    - webcam extension
+    - command line arg parse, save pic 
+    - smart density partitions (FFT, distribution std binning), good binning?
+    - FFT overlay and color original image by FFT pixel value
+    # - arrange colours tonally 
+"""
+
 import os 
 import argparse
 import matplotlib.pyplot as plt
@@ -179,3 +188,71 @@ if plot_knitted:
     ax.imshow(part_img, cmap=discrete_cmap(colours=None))
     ax.axis('off')
     plt.savefig(os.path.join(os.getcwd(), args.save_path))
+
+
+"""
+k_grid = 2
+
+fig, ax = plt.subplots(figsize=(6,6), dpi=100)
+fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
+
+# Set the gridding interval: here we use the major tick interval
+loc = plticker.MultipleLocator(base=k_grid)
+ax.xaxis.set_major_locator(loc)
+ax.yaxis.set_major_locator(loc)
+
+# Add the grid
+ax.grid(which='major', axis='both', linestyle='-', lw=1, alpha=0.25)
+ax.imshow(part_img, cmap=discrete_cmap(colours=None))
+# grid specs
+nx = abs(int(float(ax.get_xlim()[1] - ax.get_xlim()[0]) / float(k_grid)))
+ny = abs(int(float(ax.get_ylim()[1] - ax.get_ylim()[0]) / float(k_grid)))
+
+print(nx, ny)
+
+for j in range(ny):
+    y = k_grid / 2 + j * k_grid
+    for i in range(nx):
+        x = k_grid / 2. + float(i) * k_grid
+        # Add some labels to the gridsquares
+        # ax.text(x, y,'{:d}'.format(i + j * nx), 
+                # color='w', ha='center', va='center', alpha=0.5)
+
+ax.grid(True)
+ax.set_xticklabels([])
+ax.set_yticklabels([])
+# for tic in ax.xaxis.get_major_ticks():
+#     tic.tick1On = tic.tick2On = False 
+# for tic in ax.xaxis.get_major_ticks():
+#     tic.tick1On = tic.tick2On = False
+for tic in ax.xaxis.get_major_ticks():
+    tic.tick1line.set_visible = tic.tick2line.set_visible = False 
+for tic in ax.yaxis.get_major_ticks():
+    tic.tick1line.set_visible = tic.tick2line.set_visible = False
+
+dx, dy = 2, 2
+k_grid = 0.2
+
+fig, ax = plt.subplots(figsize=(6,6), dpi=100)
+fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
+
+# Add the grid to image (not overwrite image pixels)
+grid_img = np.zeros((dx * part_img.shape[0],
+                     dy * part_img.shape[1])).astype(np.float32)
+print(grid_img.dtype)
+img += 0.000001
+# grid_img[:,:] = np.nan
+grid_img[::dx,::dy] = part_img
+
+
+# ax.grid(which='major', axis='both', linestyle='-', lw=1)
+ax.imshow(grid_img, cmap=discrete_cmap(colours=None), clim=[1e-6,1])
+  
+ax.set_xticklabels([])
+ax.set_yticklabels([])
+for tic in ax.xaxis.get_major_ticks():
+    tic.tick1line.set_visible = tic.tick2line.set_visible = False 
+for tic in ax.yaxis.get_major_ticks():
+    tic.tick1line.set_visible = tic.tick2line.set_visible = False 
+plt.show()
+"""
